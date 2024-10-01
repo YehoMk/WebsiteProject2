@@ -32,7 +32,7 @@ def register():
     try:
         db.session.add(user)
         db.session.commit()
-        return "Success"
+        return "Success!"
     except IntegrityError:
         db.session.rollback()
         return "This user already exists try again."
