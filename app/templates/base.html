@@ -17,40 +17,16 @@
 </head>
 <body>
 
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#accountModal" hx-get="{{ url_for('register_retrieve') }}" hx-target="#accountModalContent">Account</button>
 
   {% block content %}{% endblock %}
 
-  <!--Modal with the registration form-->
+  <!--The account modal. Retrieves register_and_profile first. Then you can retrieve login. And then it loops around.-->
 
-  <div class="modal fade" id="registerModal" tabindex="-1">
+  <div class="modal fade" id="accountModal" tabindex="-1">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="registerModalLabel">Register</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div>
-          <form id="registerForm" class="p-2" hx-post="{{ url_for('register') }}" hx-target="#resultText">
+      <div class="modal-content" id="accountModalContent">
 
-            <label>Username</label> <br />
-            <input name="username" type="text" placeholder="username" required> <br />
-
-            <label>Email</label> <br />
-            <input name="email" type="email" placeholder="example@adress.com" required> <br />
-
-            <label>Password</label> <br />
-            <input name="password" type="password" placeholder="password" required> <br />
-
-          </form>
-
-          <div id="resultText">
-
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" type="submit" form="registerForm">Confirm</button>
-        </div>
       </div>
     </div>
   </div>

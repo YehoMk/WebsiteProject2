@@ -1,0 +1,34 @@
+<!--Modal content that includes the regiter form or the account page-->
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="accountModalLabel">Register</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  </div>
+
+  {% if current_user.id %}
+    <h1>Username: {{ current_user.username }}</h1>
+    <h1>Email: {{ current_user.email }}</h1>
+    <h1>Id: {{ current_user.id }}</h1>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  {% else %}
+    <form id="registerForm" class="p-2" hx-post="{{ url_for('register_process') }}" hx-target="#resultText">
+
+      <label>Username</label> <br />
+      <input name="username" type="text" placeholder="username" required> <br />
+
+      <label>Email</label> <br />
+      <input name="email" type="email" placeholder="example@address.com" required> <br />
+
+      <label>Password</label> <br />
+      <input name="password" type="password" placeholder="password" required> <br />
+
+    </form>
+
+    <div id="resultText">
+
+    </div>
+  {% endif %}
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary" hx-get="{{ url_for('login_retrieve') }}" hx-target="#accountModalContent">Login</button>
+    <button class="btn btn-primary" type="submit" form="registerForm">Confirm</button>
+  </div>
