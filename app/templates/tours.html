@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Tours{% endblock %}
+
+{% block content %}
+
+  <h1>Tours page</h1>
+
+  {% for tour in tours %}
+    <div class="card m-4" style="width: 18rem">
+      <img src="{{ tour.image_path }}" >
+      <div class="card-body">
+        <h5 class="card-title">{{ tour.title }}</h5>
+        <p class="card-text">{{ tour.description }}</p>
+        <p class="card-text text-primary fw-bold">{{ tour.min_price }}$</p>
+        <button class="btn btn-primary">Buy</button>
+      </div>
+    </div>
+  {% endfor %}
+
+{% endblock %}

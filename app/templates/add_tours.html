@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Add tours{% endblock %}
+
+{% block content %}
+
+  <h1>Add tours</h1>
+
+  <form id="addTourForm" class="p-3" hx-post="{{ url_for('add_tours_process') }}" hx-target="#addTourResultText" enctype="multipart/form-data">
+
+    <label>Title</label> <br />
+    <input name="title" type="text" placeholder="title" required> <br />
+
+    <label>Image</label> <br />
+    <input name="image" type="file" required> <br />
+
+    <label>Description</label> <br />
+    <input name="description" type="text" placeholder="description" required> <br />
+
+    <label>Minimal price</label> <br />
+    <input name="minPrice" type="number" placeholder="$" required> <br />
+
+    <br />
+
+    <button class="btn btn-primary" >Submit</button>
+
+    <div id="addTourResultText">
+
+    </div>
+
+  </form>
+
+{% endblock %}

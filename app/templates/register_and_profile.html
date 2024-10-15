@@ -8,6 +8,10 @@
     <h1>Username: {{ current_user.username }}</h1>
     <h1>Email: {{ current_user.email }}</h1>
     <h1>Id: {{ current_user.id }}</h1>
+    {% if current_user.id == 1 %}
+      <h2>ADMIN ACCOUNT</h2>
+      <a href="{{ url_for('add_tours_retrieve') }}">Add a tour</a>
+    {% endif %}
     <a href="{{ url_for('logout') }}">Logout</a>
   {% else %}
     <form id="registerForm" class="p-2" hx-post="{{ url_for('register_process') }}" hx-target="#resultText">
