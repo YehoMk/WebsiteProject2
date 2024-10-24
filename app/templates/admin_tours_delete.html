@@ -1,0 +1,9 @@
+<!--This is the selection for tour deletion that will be added to adminModalContent in admin_tours.html-->
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="adminModalLabel">Delete a tour</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  </div>
+
+  {% for tour in tours %}
+    <button class="btn btn-primary m-2" hx-post="{{ url_for('tours_delete_process', tour_id=tour.id) }}">{{ tour.title }} [{{ tour.id }}]</button>
+  {% endfor %}

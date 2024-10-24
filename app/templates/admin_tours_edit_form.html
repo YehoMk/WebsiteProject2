@@ -1,0 +1,31 @@
+<!--This is the form for tour creation that will be added to adminModalContent in admin_tours.html-->
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="adminModalLabel">Editing tour [{{ tour_id }}]</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  </div>
+
+  <form id="editTourForm" class="p-3" hx-post="{{ url_for('tours_edit_form_process', tour_id=tour_id) }}" hx-target="#editTourResultText" enctype="multipart/form-data">
+
+    <label>Title</label> <br />
+    <input name="title" type="text" placeholder="title" required> <br />
+
+    <label>Image</label> <br />
+    <input name="image" type="file" required> <br />
+
+    <label>Description</label> <br />
+    <input name="description" type="text" placeholder="description" required> <br />
+
+    <label>Minimal price</label> <br />
+    <input name="minPrice" type="number" placeholder="$" required> <br />
+
+    <br />
+
+    <div id="editTourResultText">
+
+    </div>
+
+  </form>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="submit" form="editTourForm">Confirm</button>
+  </div>

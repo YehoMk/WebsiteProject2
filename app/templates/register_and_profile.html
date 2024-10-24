@@ -1,4 +1,4 @@
-<!--Modal content that includes the regiter form or the account page-->
+<!--This is the form for registration that will be added to accountModalContent in base.html-->
   <div class="modal-header">
     <h1 class="modal-title fs-5" id="accountModalLabel">Register</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -10,7 +10,7 @@
     <h1>Id: {{ current_user.id }}</h1>
     {% if current_user.id == 1 %}
       <h2>ADMIN ACCOUNT</h2>
-      <a href="{{ url_for('add_tours_retrieve') }}">Add a tour</a>
+      <a href="{{ url_for('tours_manage_retrieve') }}">Admin panel</a>
     {% endif %}
     <a href="{{ url_for('logout') }}">Logout</a>
   {% else %}

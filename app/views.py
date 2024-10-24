@@ -55,19 +55,27 @@ def tours():
 # Admin related pages
 
 
-@app.route("/add_tours", methods=["GET"])
-def add_tours_retrieve():
+@app.route("/tours_manage", methods=["GET"])
+def tours_manage_retrieve():
     """
-    :return: HTML with the form for tour creation.
+    Renders the admin panel.
     """
-    print(current_user.get_id())
     if current_user.get_id() is None or current_user.id != 1:
         return "Error: this page is available only for admin users."
-    return render_template("add_tours.html")
+    return render_template("admin_tours.html")
 
 
-@app.route("/add_tours", methods=["POST"])
-def add_tours_process():
+@app.route("/tours_manage/add_tours", methods=["GET"])
+def tours_add_retrieve():
+    """
+    Renders the "add tour" form within the AdminModal.
+    """
+    print(current_user.get_id())
+    return render_template("admin_tours_add.html")
+
+
+@app.route("/tours_manage/add_tours", methods=["POST"])
+def tours_add_process():
     """
     Adds a tour to the database. Adds the image files to the uploads folder. Creates the upload folder if there isn't one yet.
     :return: addTourResultText used in the form.
@@ -105,6 +113,90 @@ def add_tours_process():
     except IntegrityError:
         db.session.rollback()
         return "Tour creation error."
+
+
+@app.route("/tours_manage/edit_tours", methods=["GET"])
+def tours_edit_retrieve():
+    """
+    Renders the "edit tour" selection within the AdminModal.
+    """
+    tours = Tour.query.all()
+    return render_template("admin_tours_edit.html", tours=tours)
+
+
+@app.route("/tours_manage/edit_tours/<int:tour_id>", methods=["GET"])
+def tours_edit_form_retrieve(tour_id):
+    """
+    Renders the "edit tour" form within the AdminModal.
+    :param tour_id: The id of the tour that was selected for editing.
+    """
+    return render_template("admin_tours_edit_form.html", tour_id=tour_id)
+
+
+@app.route("/tours_manage/edit_tours/<int:tour_id>", methods=["POST"])
+def tours_edit_form_process(tour_id):
+    """
+    Edits an already existing tour in the database. Adds the image files to the uploads folder. Creates the upload folder if there isn't one yet.
+    :param tour_id: The id of the tour that was selected for editing.
+    :return: editTourResultText used in the form.
+    """
+    # Checks the image and adds it to the upload folder
+    file = request.files["image"]
+    if file and allowed_file(file.filename):
+        if "uploads" not in os.listdir("app/static"):
+            os.mkdir("app/static/uploads")
+        if os.listdir("app/static/uploads") == []:
+            image_id = "1"
+        else:
+            image_id_list = [int(image.rsplit(".", 1)[0]) for image in os.listdir("app/static/uploads")]
+            image_id_list.sort()
+            image_id = str(image_id_list[-1] + 1)
+
+        filename = secure_filename(file.filename)
+        id_filename = filename.rsplit(".", 1)
+        id_filename[0] = image_id
+        id_filename = ".".join(id_filename)
+
+        image_path = f"/static/uploads/{id_filename}"
+        file.save(os.path.join(app.config["UPLOAD_FOLDER"], id_filename))
+
+    # Gets the rest of the information and adds it to the database
+    title = request.form["title"]
+    description = request.form["description"]
+    min_price = request.form["minPrice"]
+    tour = Tour.query.filter_by(id=tour_id).one()
+    try:
+        tour.title = title
+        tour.image_path = image_path
+        tour.description = description
+        tour.min_price = min_price
+        db.session.commit()
+        return "Success"
+    except IntegrityError:
+        db.session.rollback()
+        return "Tour creation error."
+
+
+
+@app.route("/tours_manage/delete_tours", methods=["GET"])
+def tours_delete_retrieve():
+    """
+    Renders the "delete tour" selection within the AdminModal.
+    """
+    tours = Tour.query.all()
+    return render_template("admin_tours_delete.html", tours=tours)
+
+
+@app.route("/tours_manage/delete_tours/<int:tour_id>", methods=["POST"])
+def tours_delete_process(tour_id):
+    """
+    :param tour_id: The id of the tour that was selected for deletion.
+    :return: tour_id that is displayed in the selection.
+    """
+    tour = Tour.query.filter_by(id=tour_id).one()
+    db.session.delete(tour)
+    db.session.commit()
+    return f"Deleted {[tour_id]}"
 
 
 # Account management
