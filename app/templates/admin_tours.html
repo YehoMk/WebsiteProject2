@@ -8,12 +8,22 @@
 
   <br /> <br />
 
-  <div>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminModal" hx-get="{{ url_for('tours_add_retrieve') }}" hx-target="#adminModalContent">Add</button> <br /> <br />
+  <div class="container text-center position-absolute top-50 start-50 translate-middle">
+    <div class="row gap-3">
 
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminModal" hx-get="{{ url_for('tours_edit_retrieve') }}" hx-target="#adminModalContent">Edit</button> <br /> <br />
+      <div class="col p-4 border border-5 border-primary rounded">
+        <button class="btn btn-primary fs-2 fw-bold" data-bs-toggle="modal" data-bs-target="#adminModal" hx-get="{{ url_for('tours_add_retrieve') }}" hx-target="#adminModalContent">Add</button>
+      </div>
 
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminModal" hx-get="{{ url_for('tours_delete_retrieve') }}" hx-target="#adminModalContent">Delete</button>
+      <div class="col p-4 border border-5 border-primary rounded">
+        <button class="btn btn-primary fs-2 fw-bold" data-bs-toggle="modal" data-bs-target="#adminModal" hx-get="{{ url_for('tours_edit_retrieve') }}" hx-target="#adminModalContent">Edit</button>
+      </div>
+
+      <div class="col p-4 border border-5 border-primary rounded">
+        <button class="btn btn-primary fs-2 fw-bold" data-bs-toggle="modal" data-bs-target="#adminModal" hx-get="{{ url_for('tours_delete_retrieve') }}" hx-target="#adminModalContent">Delete</button>
+      </div>
+
+    </div>
   </div>
 
   <div class="modal fade" id="adminModal" tabindex="-1">

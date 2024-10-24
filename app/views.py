@@ -39,17 +39,19 @@ def index():
     The function for the main page of the website.
     :return: template for the main page.
     """
-    return render_template("index.html")
+    index_selector = "border-bottom border-light border-2"
+    return render_template("index.html", index_selector=index_selector)
 
 
 @app.route("/tours")
 def tours():
     """
-    The function for the page with the tours .
+    The function for the page with the tours. The selector variable contains needed bootstrap styling.
     :return: template for the tours page.
     """
     tours = Tour.query.all()
-    return render_template("tours.html", tours=tours)
+    tours_selector = "border-bottom border-light border-2"
+    return render_template("tours.html", tours=tours, tours_selector=tours_selector)
 
 
 # Admin related pages
