@@ -5,13 +5,13 @@
 {% block content %}
 
   {% for tour in tours %}
-    <div class="card m-4" style="width: 18rem">
-      <img src="{{ tour.image_path }}" >
+    <div class="card m-4 w-25">
+      <img class="border rounded" src="{{ tour.image_path }}" height="200">
       <div class="card-body">
-        <h5 class="card-title">{{ tour.title }}</h5>
-        <p class="card-text">{{ tour.description }}</p>
-        <p class="card-text text-primary fw-bold">from {{ tour.min_price }}$ to {{ tour.max_price }}$</p>
-        <button class="btn btn-primary" hx-get="{{ url_for('tours_modal_retrieve', tour_id=tour.id) }}" data-bs-toggle="modal" data-bs-target="#tourModal" hx-target="#tourModalContent">Buy</button>
+        <h5 class="card-title fs-3 fw-light">{{ tour.title }}</h5>
+        <p class="card-text">{{ tour.description[0:100] }}{% if tour.description|length > 100 %}. . .{% endif %}</p>
+        <p class="card-text fw-bold text-primary border-bottom border-3 border-primary">from {{ tour.min_price }}$ to {{ tour.max_price }}$</p>
+        <button class="btn btn-primary w-100 fw-bold" hx-get="{{ url_for('tours_modal_retrieve', tour_id=tour.id) }}" data-bs-toggle="modal" data-bs-target="#tourModal" hx-target="#tourModalContent">Book</button>
       </div>
     </div>
   {% endfor %}
