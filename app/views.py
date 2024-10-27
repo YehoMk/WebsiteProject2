@@ -78,6 +78,22 @@ def tours_modal_process(tour_id):
     days_value = int(request.form["days"])
     food_value = request.form["food"]
 
+
+    for element in [element for element in str(people_value)]:
+        if element not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+            return "Error: People value should be a number."
+    if not (1 <= people_value <= 4):
+        return "Error: People value should be between 1 and 4"
+
+    for element in [element for element in str(people_value)]:
+        if element not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+            return "Error: Days value should be a number."
+    if not (1 <= days_value <= 30):
+        return "Error: Days value should be between 1 and 30"
+
+    if food_value not in ["noFood", "breakfasts", "allInclusive"]:
+        return "Error: Incorrect food value."
+
     if people_value == 1:
         people_percent = 0
     elif people_value == 2:
@@ -98,7 +114,7 @@ def tours_modal_process(tour_id):
 
     if food_value == "noFood":
         food_percent = 0
-    elif food_value == "breakfasts":
+    elif food_value == "noFood":
         food_percent = 15
     elif food_value == "allInclusive":
         food_percent = 30
