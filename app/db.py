@@ -24,9 +24,9 @@ class User(UserMixin, db.Model):
 class Tour(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     creation_time = db.Column(db.DateTime, default=datetime.utcnow)
-    title = db.Column(db.String(20), nullable=False)
+    title = db.Column(db.String, nullable=False)
     image_path = db.Column(db.String)
-    description = db.Column(db.String(120), nullable=False)
+    description = db.Column(db.String, nullable=False)
     min_price = db.Column(db.Integer, nullable=False)
     max_price = db.Column(db.Integer)
 

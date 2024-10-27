@@ -172,7 +172,14 @@ def tours_add_process():
     description = request.form["description"]
     min_price = request.form["minPrice"]
     max_price = request.form["maxPrice"]
+
+    if len(title) > 20:
+        return "Error: The title can't have more than 20 characters."
+    if len(description) > 800:
+        return "Error: The description can't have more than 800 characters."
+
     tour = Tour(title=title, description=description, min_price=min_price, max_price=max_price, image_path=image_path)
+
     try:
         db.session.add(tour)
         db.session.commit()
@@ -233,6 +240,12 @@ def tours_edit_form_process(tour_id):
     min_price = request.form["minPrice"]
     max_price = request.form["maxPrice"]
     tour = Tour.query.filter_by(id=tour_id).one()
+
+    if len(title) > 20:
+        return "Error: The title can't have more than 20 characters."
+    if len(description) > 800:
+        return "Error: The description can't have more than 800 characters."
+
     try:
         tour.title = title
         tour.image_path = image_path
