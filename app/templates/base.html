@@ -31,7 +31,15 @@
       </ul>
 
       <ul class="navbar-nav ms-auto">
-         <button type="button" class="nav-link fs-5 text-light border border-light border-2 rounded" data-bs-toggle="modal" data-bs-target="#accountModal" hx-get="{{ url_for('register_retrieve') }}" hx-target="#accountModalContent">Account</button>
+        {% if current_user.id %}
+        <li>
+          <button type="button" class="nav-link fs-5 text-light border border-light border-2 rounded" data-bs-toggle="modal" data-bs-target="#accountModal" hx-get="{{ url_for('profile') }}" hx-target="#accountModalContent">Account</button>
+        </li>
+        {% else %}
+        <li class="navbar-nav" hx-get="{{ url_for('login_profile_button_retrieve') }}" hx-trigger="makeAccountButtonProfile from:body">
+          <button type="button" class="nav-link fs-5 text-light border border-light border-2 rounded" data-bs-toggle="modal" data-bs-target="#accountModal" hx-get="{{ url_for('register_retrieve') }}" hx-target="#accountModalContent">Account</button>
+        </li>
+        {% endif %}
       </ul>
 
   </nav>
@@ -41,7 +49,7 @@
   <!--The account modal. Retrieves register_and_profile first. Then you can retrieve login. And then it loops around.-->
 
   <div class="modal fade" id="accountModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content" id="accountModalContent">
 
       </div>

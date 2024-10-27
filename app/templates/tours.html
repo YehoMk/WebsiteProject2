@@ -10,10 +10,18 @@
       <div class="card-body">
         <h5 class="card-title">{{ tour.title }}</h5>
         <p class="card-text">{{ tour.description }}</p>
-        <p class="card-text text-primary fw-bold">{{ tour.min_price }}$</p>
-        <button class="btn btn-primary">Buy</button>
+        <p class="card-text text-primary fw-bold">from {{ tour.min_price }}$ to {{ tour.max_price }}$</p>
+        <button class="btn btn-primary" hx-get="{{ url_for('tours_modal_retrieve', tour_id=tour.id) }}" data-bs-toggle="modal" data-bs-target="#tourModal" hx-target="#tourModalContent">Buy</button>
       </div>
     </div>
   {% endfor %}
+
+  <div class="modal fade" id="tourModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content" id="tourModalContent">
+
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

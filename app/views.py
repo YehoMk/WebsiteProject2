@@ -49,9 +49,73 @@ def tours():
     The function for the page with the tours. The selector variable contains needed bootstrap styling.
     :return: template for the tours page.
     """
+    if current_user.get_id() is None:
+        return "Error: You must login to view this page."
     tours = Tour.query.all()
     tours_selector = "border-bottom border-light border-2"
     return render_template("tours.html", tours=tours, tours_selector=tours_selector)
+
+
+# tours processing
+
+@app.route("/tours/modal/<int:tour_id>", methods=["GET"])
+def tours_modal_retrieve(tour_id):
+    """
+    Renders the "book tour" page and form within the tourModal.
+    :param tour_id: The id of the tour that was selected for booking.
+    """
+    tour = Tour.query.filter_by(id=tour_id).one()
+    return render_template("tours_modal.html", tour=tour)
+
+
+@app.route("/tours/modal/<int:tour_id>", methods=["POST"])
+def tours_modal_process(tour_id):
+    """
+    Books the tour by making an instance of the Booking database model. Calculates the price depending on the form data.
+    :param tour_id: The id of the tour that was selected for booking.
+    """
+    people_value = int(request.form["people"])
+    days_value = int(request.form["days"])
+    food_value = request.form["food"]
+
+    if people_value == 1:
+        people_percent = 0
+    elif people_value == 2:
+        people_percent = 10
+    elif people_value == 3:
+        people_percent = 20
+    elif people_value == 4:
+        people_percent = 30
+
+    if 1 <= days_value <= 3:
+        days_percent = 0
+    elif 4 <= days_value <= 7:
+        days_percent = 15
+    elif 7 <= days_value <= 15:
+        days_percent = 30
+    elif 15 <= days_value <= 30:
+        days_percent = 40
+
+    if food_value == "noFood":
+        food_percent = 0
+    elif food_value == "breakfasts":
+        food_percent = 15
+    elif food_value == "allInclusive":
+        food_percent = 30
+
+    total_percent = people_percent + days_percent + food_percent
+    tour = Tour.query.filter_by(id=tour_id).one()
+    price = int((tour.max_price - tour.min_price) * total_percent/100 + tour.min_price)
+    print(price)
+
+    booking = Booking(user_id=int(current_user.id), tour_id=tour_id, people_value=people_value, days_value=days_value, food_value=food_value, price=price)
+    try:
+        db.session.add(booking)
+        db.session.commit()
+        return "Success"
+    except IntegrityError:
+        db.session.rollback()
+        return "Booking error."
 
 
 # Admin related pages
@@ -107,7 +171,8 @@ def tours_add_process():
     title = request.form["title"]
     description = request.form["description"]
     min_price = request.form["minPrice"]
-    tour = Tour(title=title, description=description, min_price=min_price, image_path=image_path)
+    max_price = request.form["maxPrice"]
+    tour = Tour(title=title, description=description, min_price=min_price, max_price=max_price, image_path=image_path)
     try:
         db.session.add(tour)
         db.session.commit()
@@ -166,12 +231,14 @@ def tours_edit_form_process(tour_id):
     title = request.form["title"]
     description = request.form["description"]
     min_price = request.form["minPrice"]
+    max_price = request.form["maxPrice"]
     tour = Tour.query.filter_by(id=tour_id).one()
     try:
         tour.title = title
         tour.image_path = image_path
         tour.description = description
         tour.min_price = min_price
+        tour.max_price = max_price
         db.session.commit()
         return "Success"
     except IntegrityError:
@@ -204,12 +271,37 @@ def tours_delete_process(tour_id):
 # Account management
 
 
+@app.route("/profile", methods=["GET"])
+def profile():
+    """
+    :return: HTML with profile content needed for the accountModal.
+    """
+    bookings = Booking.query.filter_by(user_id=current_user.id).all()
+    bookings_full_data = []
+    for booking in bookings:
+        booking_dict = dict()
+
+        booking_dict["tour_id"] = booking.tour_id
+        booking_dict["people_value"] = booking.people_value
+        booking_dict["days_value"] = booking.days_value
+        booking_dict["food_value"] = booking.food_value
+        booking_dict["price"] = booking.price
+
+        tour = Tour.query.filter_by(id=booking.tour_id).one()
+        booking_dict["tour_title"] = tour.title
+        booking_dict["tour_image_path"] = tour.image_path
+
+        bookings_full_data.append(booking_dict)
+
+    return render_template("profile.html", bookings_full_data=bookings_full_data)
+
+
 @app.route("/register", methods=["GET"])
 def register_retrieve():
     """
     :return: HTML with register content needed for the accountModal.
     """
-    return render_template("register_and_profile.html")
+    return render_template("register.html")
 
 
 @app.route("/register", methods=["POST"])
@@ -256,7 +348,17 @@ def login_process():
     if user is None or not check_password_hash(user.password_hash, password):
         return "Incorrect details. Try again."
     login_user(user, remember=True)
-    return "Success"
+    response = make_response("success")
+    response.headers["HX-Trigger"] = "makeAccountButtonProfile"
+    return response
+
+
+@app.route("/login_profile_button", methods=["GET"])
+def login_profile_button_retrieve():
+    """
+    :return: HTML with the profile button needed for the accountModal after the user logs in.
+    """
+    return render_template("profile_button.html")
 
 
 @app.route("/logout")

@@ -1,19 +1,10 @@
-<!--This is the form for registration that will be added to accountModalContent in base.html-->
+  <!--This is the form for registration that will be added to accountModalContent in base.html-->
   <div class="modal-header">
     <h1 class="modal-title fs-5" id="accountModalLabel">Register</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
   </div>
 
-  {% if current_user.id %}
-    <h1>Username: {{ current_user.username }}</h1>
-    <h1>Email: {{ current_user.email }}</h1>
-    <h1>Id: {{ current_user.id }}</h1>
-    {% if current_user.id == 1 %}
-      <h2>ADMIN ACCOUNT</h2>
-      <a href="{{ url_for('tours_manage_retrieve') }}">Admin panel</a>
-    {% endif %}
-    <a href="{{ url_for('logout') }}">Logout</a>
-  {% else %}
+  <div class="modal-body">
     <form id="registerForm" class="p-2" hx-post="{{ url_for('register_process') }}" hx-target="#resultText">
 
       <label>Username</label> <br />
@@ -30,7 +21,7 @@
     <div id="resultText">
 
     </div>
-  {% endif %}
+  </div>
 
   <div class="modal-footer">
     <button class="btn btn-secondary" hx-get="{{ url_for('login_retrieve') }}" hx-target="#accountModalContent">Login</button>

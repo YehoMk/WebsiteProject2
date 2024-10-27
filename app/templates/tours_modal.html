@@ -1,0 +1,87 @@
+  <!--This is the page for booking a selected tour that will be added to accountModalContent in base.html-->
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="tourModalLabel">{{ tour.title }}</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  </div>
+
+  <div class="modal-body">
+    <form id="buyTourForm" hx-post="{{ url_for('tours_modal_process', tour_id=tour.id) }}" hx-target="#buyTourResult">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col">
+            <img class="w-100" src="{{ tour.image_path }}">
+          </div>
+
+          <div class="col border border-3 border-primary rounded">
+            <p class="col">{{ tour.description }}</p>
+          </div>
+
+        </div>
+
+        <br />
+
+        <div class="row mt-1 border border-3 border-primary rounded">
+
+          <div class="col">
+            <h1>People:</h1>
+          </div>
+
+          <div class="col">
+            <input name="people" class="w-100" type="number" min="1" max="4" required>
+          </div>
+
+        </div>
+
+        <div class="row mt-1 border border-3 border-primary rounded">
+
+          <div class="col">
+            <h1>Days:</h1>
+          </div>
+
+          <div class="col">
+            <input name="days" class="w-100" type="number" min="1" max="30" required>
+          </div>
+
+        </div>
+
+        <div class="row mt-1 border border-3 border-primary rounded">
+
+          <div class="col">
+            <h1>Food:</h1>
+          </div>
+
+          <div class="col">
+            <select name="food" class="w-100">
+              <option value="noFood">No food</option>
+              <option value="breakfasts">Breakfasts</option>
+              <option value="allInclusive">All inclusive</option>
+            </select>
+          </div>
+
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col">
+          <h1>Min price: {{ tour.min_price }}$</h1>
+          <h1>Max price: {{ tour.max_price }}$</h1>
+        </div>
+
+        <div class="col">
+          <button class="btn btn-primary w-100" form="buyTourForm">Buy</button>
+          <p id="buyTourResult"></p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>

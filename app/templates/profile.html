@@ -1,0 +1,37 @@
+  <!--This is the profile page that will be added to accountModalContent in base.html-->
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="accountModalLabel">Profile</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col">
+        <h1>{{ current_user.username }}</h1>
+        <p>{{ current_user.email }}</p>
+        <a class="btn btn-primary" href="{{ url_for('logout') }}">Logout</a>
+        {% if current_user.id == 1 %}
+          <br /> <br />
+          <a class="btn btn-warning" href="{{ url_for('tours_manage_retrieve') }}">Admin panel</a>
+        {% endif %}
+      </div>
+
+      <div class="col" style="overflow: scroll; height: 23rem">
+        <h1>Booked tours</h1>
+        {% for booking in bookings_full_data %}
+          <div class="card mt-3" style="width: 18rem">
+            <img src="{{ booking.tour_image_path }}" >
+            <div class="card-body">
+              <h5 class="card-title">{{ booking.tour_title }} [{{ booking.tour_id }}]</h5>
+              <p class="card-text">People: {{ booking.people_value }}</p>
+              <p class="card-text">Days: {{ booking.days_value }}</p>
+              <p class="card-text">Food: {{ booking.food_value }}</p>
+              <p class="card-text">Price: {{ booking.price }}$</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
