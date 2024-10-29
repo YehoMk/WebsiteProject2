@@ -24,7 +24,7 @@
 
         <div class="row">
 
-          <div class="col text-end">
+          <div class="col text-center">
             <h1 class="fw-light">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
@@ -34,14 +34,18 @@
           </div>
 
           <div class="col">
-            <input name="people" class="form-control w-25 text-center border border-3 border-primary" type="text" min="1" max="4" placeholder="1-4" required>
+            <input id="people_range" value="1" name="people" class="w-100" type="range" min="1" max="4" required>
+          </div>
+
+          <div class="col text-center">
+            <h1 id="people_result" class="fw-light">1</h1>
           </div>
 
         </div>
 
         <div class="row">
 
-          <div class="col text-end">
+          <div class="col text-center">
             <h1 class="fw-light">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-calendar-fill" viewBox="0 0 16 16">
                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5h16V4H0V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5"/>
@@ -51,14 +55,18 @@
           </div>
 
           <div class="col">
-            <input name="days" class="form-control w-25 text-center border border-3 border-primary" type="text" min="1" max="30" placeholder="1-30" required>
+            <input id="days_range" value="1" name="days" class="w-100" type="range" min="1" max="30" required>
+          </div>
+
+          <div class="col text-center">
+            <h1 id="days_result" class="fw-light">1</h1>
           </div>
 
         </div>
 
         <div class="row">
 
-          <div class="col text-end">
+          <div class="col-4 text-center">
             <h1 class="fw-light">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-egg-fried" viewBox="0 0 16 16">
                 <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
@@ -68,8 +76,8 @@
             </h1>
           </div>
 
-          <div class="col">
-            <select name="food" class="form-select w-25 text-center border border-3 border-primary">
+          <div class="col-8">
+            <select id="food_select" name="food" class="form-select w-100 text-center border border-3 border-primary">
               <option value="noFood">No food</option>
               <option value="breakfasts">Breakfasts</option>
               <option value="allInclusive">All inclusive</option>
@@ -86,7 +94,7 @@
       <div class="row">
 
         <div class="col">
-          <h1 class="fw-light"> from <span style="color: var(--bs-primary);">{{ tour.min_price }}$</span> to <span style="color: var(--bs-primary)">{{ tour.max_price }}$</span></h1>
+          <h1 class="fw-light"> from <span id="minPrice" style="color: var(--bs-primary);">{{ tour.min_price }}$</span> to <span style="color: var(--bs-primary)">{{ tour.max_price }}$</span></h1>
         </div>
 
         <div class="col">
@@ -97,3 +105,7 @@
       </div>
     </div>
   </div>
+
+  <script src="/static/modal.js">
+
+  </script>
