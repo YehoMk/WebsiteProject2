@@ -78,7 +78,6 @@ def tours_modal_process(tour_id):
     days_value = int(request.form["days"])
     food_value = request.form["food"]
 
-
     for element in [element for element in str(people_value)]:
         if element not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
             return "Error: People value should be a number."
@@ -114,7 +113,7 @@ def tours_modal_process(tour_id):
 
     if food_value == "noFood":
         food_percent = 0
-    elif food_value == "noFood":
+    elif food_value == "breakfasts":
         food_percent = 15
     elif food_value == "allInclusive":
         food_percent = 30

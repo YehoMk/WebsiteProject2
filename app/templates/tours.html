@@ -5,7 +5,7 @@
 {% block content %}
 
   {% for tour in tours %}
-    <div class="card m-4 w-25">
+    <div class="card m-4 border border-3 border-primary" style="--bs-border-opacity: .2; width: 22rem;">
       <img class="border rounded" src="{{ tour.image_path }}" height="200">
       <div class="card-body">
         <h5 class="card-title fs-3 fw-light">{{ tour.title }}</h5>
