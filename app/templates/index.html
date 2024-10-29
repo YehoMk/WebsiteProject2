@@ -4,6 +4,11 @@
 
 {% block content %}
 
-  <h1>Main page</h1>
+  <h1 class="display-1 mt-5 p-5 text-center text-light bg-primary">Main page</h1>
+
+  <div class="mt-5 p-5 bg-primary text-center">
+    <h1 class="display-4 mb-5 text-light">Browse tours</h1>
+    <a class="btn btn-light btn-lg text-primary fw-bold" href="{{ url_for('tours') }}">Tours</a>
+  </div>
 
 {% endblock %}
