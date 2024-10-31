@@ -133,6 +133,20 @@ def tours_modal_process(tour_id):
         return "Booking error."
 
 
+@app.route("/tours/search", methods=["POST"])
+def tours_search():
+    tours_selector = "border-bottom border-light border-2"
+
+    search_request = request.form["title"]
+    tours = Tour.query.all()
+
+    search_result = []
+    for tour in tours:
+        if search_request in tour.title:
+            search_result.append(tour)
+    return render_template("tours.html", tours=search_result, tours_selector=tours_selector)
+
+
 # Admin related pages
 
 

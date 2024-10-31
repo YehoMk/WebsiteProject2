@@ -4,6 +4,17 @@
 
 {% block content %}
 
+  <form id="nameSearchForm" hx-post="{{ url_for('tours_search') }}" hx-target="body">
+    <div class="col m-4 w-50">
+      <div class="input-group">
+        <label class="input-group-text">Title:</label>
+        <input name="title" class="form-control" type="text">
+        <button class="btn btn-primary" form="nameSearchForm">Search</button>
+      </div>
+    </div>
+  </form>
+
+
   {% for tour in tours %}
     <div class="card m-4 border border-3 border-primary" style="--bs-border-opacity: .2; width: 22rem;">
       <img class="border rounded" src="{{ tour.image_path }}" height="200">
@@ -15,6 +26,7 @@
       </div>
     </div>
   {% endfor %}
+
 
   <div class="modal fade" id="tourModal" tabindex="-1">
     <div class="modal-dialog modal-xl">
