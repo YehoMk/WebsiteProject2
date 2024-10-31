@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, make_response, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, NoResultFound
 from flask_login import login_user, current_user, login_required, logout_user
 import os
 from werkzeug.utils import secure_filename
@@ -315,9 +315,15 @@ def profile():
         booking_dict["food_value"] = booking.food_value
         booking_dict["price"] = booking.price
 
-        tour = Tour.query.filter_by(id=booking.tour_id).one()
-        booking_dict["tour_title"] = tour.title
-        booking_dict["tour_image_path"] = tour.image_path
+        try:
+            tour = Tour.query.filter_by(id=booking.tour_id).one()
+        except NoResultFound:
+            booking_dict["tour_title"] = "[deleted tour]"
+            booking_dict["tour_image_path"] = "/"
+        else:
+            booking_dict["tour_title"] = tour.title
+            booking_dict["tour_image_path"] = tour.image_path
+
 
         bookings_full_data.append(booking_dict)
 
