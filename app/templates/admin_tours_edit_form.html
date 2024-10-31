@@ -1,25 +1,35 @@
 <!--This is the form for tour creation that will be added to adminModalContent in admin_tours.html-->
-  <div class="modal-header">
-    <h1 class="modal-title fs-5" id="adminModalLabel">Editing tour [{{ tour_id }}]</h1>
+  <div class="modal-header border-bottom border-3 border-primary">
+    <h1 class="modal-title ms-auto fs-4 fw-light" id="adminModalLabel">Editing tour [{{ tour_id }}]</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
   </div>
 
   <form id="editTourForm" class="p-3" hx-post="{{ url_for('tours_edit_form_process', tour_id=tour_id) }}" hx-target="#editTourResultText" enctype="multipart/form-data">
 
-    <label>Title</label> <br />
-    <input name="title" type="text" placeholder="title" required> <br />
+    <div class="input-group w-75 mx-auto mt-4">
+      <label class="input-group-text">Title</label> <br />
+      <input name="title" class="form-control" type="text" placeholder="title" required> <br />
+    </div>
 
-    <label>Image</label> <br />
-    <input name="image" type="file" required> <br />
+    <div class="input-group w-75 mx-auto mt-4">
+      <label class="input-group-text">Image</label> <br />
+      <input name="image" class="form-control" type="file" required> <br />
+    </div>
 
-    <label>Description</label> <br />
-    <input name="description" type="text" placeholder="description" required> <br />
+    <div class="input-group w-75 mx-auto mt-4">
+      <label class="input-group-text">Description</label> <br />
+      <input name="description" class="form-control" type="text" placeholder="description" required> <br />
+    </div>
 
-    <label>Minimal price</label> <br />
-    <input name="minPrice" type="number" placeholder="$" required> <br />
+    <div class="input-group w-75 mx-auto mt-4">
+      <label class="input-group-text">Minimal price</label> <br />
+      <input name="minPrice" class="form-control" type="number" placeholder="$" required> <br />
+    </div>
 
-    <label>Maximal price</label> <br />
-    <input name="maxPrice" type="number" placeholder="$" required> <br />
+    <div class="input-group w-75 mx-auto mt-4">
+      <label class="input-group-text">Maximal price</label> <br />
+      <input name="maxPrice" class="form-control" type="number" placeholder="$" required> <br />
+    </div>
 
     <br />
 
@@ -29,6 +39,6 @@
 
   </form>
 
-  <div class="modal-footer">
+  <div class="modal-footer border-top border-3 border-primary">
     <button class="btn btn-primary" type="submit" form="editTourForm">Confirm</button>
   </div>

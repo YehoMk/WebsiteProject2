@@ -1,20 +1,26 @@
   <!--This is the form for registration that will be added to accountModalContent in base.html-->
-  <div class="modal-header">
-    <h1 class="modal-title fs-5" id="accountModalLabel">Register</h1>
+  <div class="modal-header border-bottom border-3 border-primary">
+    <h1 class="modal-title ms-auto fs-4 fw-light" id="accountModalLabel">Register</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
   </div>
 
   <div class="modal-body">
-    <form id="registerForm" class="p-2" hx-post="{{ url_for('register_process') }}" hx-target="#resultText">
+    <form id="registerForm" hx-post="{{ url_for('register_process') }}" hx-target="#resultText">
 
-      <label>Username</label> <br />
-      <input name="username" type="text" placeholder="username" required> <br />
+      <div class="input-group w-50 mx-auto mt-4">
+        <label class="input-group-text">Username</label>
+        <input name="username" class="form-control" type="text" placeholder="username" required> <br />
+      </div>
 
-      <label>Email</label> <br />
-      <input name="email" type="email" placeholder="example@address.com" required> <br />
+      <div class="input-group w-50 mx-auto mt-4">
+        <label class="input-group-text">Email</label>
+        <input name="email" class="form-control" type="email" placeholder="example@address.com" required> <br />
+      </div>
 
-      <label>Password</label> <br />
-      <input name="password" type="password" placeholder="password" required> <br />
+      <div class="input-group w-50 mx-auto mt-4">
+        <label class="input-group-text">Password</label>
+        <input name="password" class="form-control" type="password" placeholder="password" required> <br />
+      </div>
 
     </form>
 
@@ -23,7 +29,7 @@
     </div>
   </div>
 
-  <div class="modal-footer">
+  <div class="modal-footer border-top border-3 border-primary">
     <button class="btn btn-secondary" hx-get="{{ url_for('login_retrieve') }}" hx-target="#accountModalContent">Login</button>
     <button class="btn btn-primary" type="submit" form="registerForm">Confirm</button>
   </div>
