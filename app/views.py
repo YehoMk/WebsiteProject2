@@ -202,6 +202,11 @@ def tours_add_process():
     min_price = request.form["minPrice"]
     max_price = request.form["maxPrice"]
 
+    if int(min_price) <= 0:
+        return "Prices can't be negative or zero"
+    if int(max_price) <= 0:
+        return "Prices can't be negative or zero"
+
     if len(title) > 20:
         return "Error: The title can't have more than 20 characters."
     if len(description) > 800:
@@ -268,6 +273,12 @@ def tours_edit_form_process(tour_id):
     description = request.form["description"]
     min_price = request.form["minPrice"]
     max_price = request.form["maxPrice"]
+
+    if int(min_price) <= 0:
+        return "Prices can't be negative or zero"
+    if int(max_price) <= 0:
+        return "Prices can't be negative or zero"
+
     tour = Tour.query.filter_by(id=tour_id).one()
 
     if len(title) > 20:
